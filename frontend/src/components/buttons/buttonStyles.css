@@ -1,0 +1,32 @@
+:root {
+    --button-text-color: #FFFFFF;
+    --button-background: #12293d;
+    --button-hover-background: transparent;
+    --button-border: #12293d;
+}
+
+.button-container {
+    display: flex;
+    padding: 10px;
+    justify-content: center;
+}
+
+.custom-button {
+    margin-top: 15px !important;
+    color: var(--button-text-color) !important;
+    background: var(--button-background) !important;
+    box-shadow: inset 0 0 0 50px var(--button-background) !important;
+    border: 2px solid transparent !important;
+    font-size: 20px !important;
+    padding: 10px !important;
+    border-radius: 10px !important;
+    min-width: 100px;
+}
+
+.custom-button:hover {
+    color: var(--button-background) !important;
+    background: var(--button-hover-background) !important;
+    box-shadow: inset 0 0 0 0 var(--button-background) !important;
+    border-color: var(--button-border) !important;
+    cursor: pointer !important;
+}
