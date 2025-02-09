@@ -1,0 +1,17 @@
+
+.dropdown-default .dropdown-toggle {
+    color: black !important;
+}
+
+.dropdown-default .dropdown-toggle::after {
+    color: black !important;
+}
+
+.dropdown-scrolled .dropdown-toggle {
+    color: white !important;
+}
+
+.dropdown-scrolled .dropdown-toggle::after {
+    color: white !important;
+}
+
