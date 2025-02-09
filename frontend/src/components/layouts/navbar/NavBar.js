@@ -5,6 +5,7 @@ import NamedRouteLink from '../../NamedRouteLink';
 import BrandLogo from '../../BrandLogo';
 import NavItem from './NavItem';
 import NavDropdownMenu from './NavDropdownMenu';
+import LoginButton from '../../buttons/LoginButton';
 
 const NavBar = () => {
     const {isScrolled, navbarBackground} = useNavbarScrollEffect();
@@ -44,6 +45,7 @@ const NavBar = () => {
                         <NavItem routeName={'HOME'} text={'Home'} isScrolled={isScrolled} />
                         <NavDropdownMenu title={'About'} items={aboutDropdownItems} isScrolled={isScrolled} />
                         <NavDropdownMenu title={'Alumni'} items={alumniDropdownItems} isScrolled={isScrolled} />
+                        <LoginButton isOnNavbar={true} />
                     </Nav>
                 </Navbar.Collapse>
             </Container>
