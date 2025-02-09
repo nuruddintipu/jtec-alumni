@@ -6,7 +6,7 @@ const NavItem = ({ routeName, text, isScrolled}) => {
         <Nav.Link
             as={NamedRouteLink}
             routeName={routeName}
-            style={{ color: isScrolled ? '#white' : 'black' }}
+            style={{ color: isScrolled ? 'white' : 'black' }}
         >
             {text}
         </Nav.Link>

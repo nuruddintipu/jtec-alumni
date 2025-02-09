@@ -45,7 +45,7 @@ const NavBar = () => {
                         <NavItem routeName={'HOME'} text={'Home'} isScrolled={isScrolled} />
                         <NavDropdownMenu title={'About'} items={aboutDropdownItems} isScrolled={isScrolled} />
                         <NavDropdownMenu title={'Alumni'} items={alumniDropdownItems} isScrolled={isScrolled} />
-                        <LoginButton isOnNavbar={true} />
+                        <LoginButton isOnNavbar={true} isScrolled={isScrolled}/>
                     </Nav>
                 </Navbar.Collapse>
             </Container>

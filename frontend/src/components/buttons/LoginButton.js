@@ -2,7 +2,7 @@ import NavItem from '../layouts/navbar/NavItem';
 import ButtonPrimary from './ButtonPrimary';
 import NamedRouteLink from '../NamedRouteLink';
 
-const LoginButton = ({ isAuthenticated, isOnNavbar = false, className = '', ...props}) => {
+const LoginButton = ({ isAuthenticated, isOnNavbar = false, isScrolled, className = '', ...props}) => {
     const buttonText = isAuthenticated ? 'Dashboard' : 'Login';
     const routeName = isAuthenticated ? 'DASHBOARD' : 'LOGIN';
 
@@ -10,6 +10,7 @@ const LoginButton = ({ isAuthenticated, isOnNavbar = false, className = '', ...p
         <NavItem
             routeName={routeName}
             text={buttonText}
+            isScrolled={isScrolled}
             {...props}
         />
     ) : (
