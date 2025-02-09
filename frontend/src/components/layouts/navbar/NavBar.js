@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import './navbar.css';
 import { Container, Image, Nav, Navbar } from 'react-bootstrap';
 
-const brandLogoNavyBlue = require('../../assets/logo/saa-logo.png');
-const brandLogoWhite = require('../../assets/logo/saa-logo-white.png');
+const brandLogoNavyBlue = require('../../../assets/logo/saa-logo.png');
+const brandLogoWhite = require('../../../assets/logo/saa-logo-white.png');
 
 const NavBar = () => {
     const [scrolled, setScrolled] = useState(false);
