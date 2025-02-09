@@ -1,5 +1,5 @@
 import LandingSection from '../../components/LandingSection';
-import './homepage.css';
+
 
 const Homepage = () => {
     return (
