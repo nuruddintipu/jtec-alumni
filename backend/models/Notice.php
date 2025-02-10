@@ -10,7 +10,8 @@ class Notice {
 
     public function createNotice($title, $content, $admin_id) {
         $noticeId = generateGuid();
-        $insert_query = "INSERT INTO notices (notice_id, title, content, admin_id, published_at) 
+        $date = date('Y-m-d H:i:s');
+        $insert_query = "INSERT INTO notices (id, title, content, creator_id, published_at) 
                      VALUES (:id, :title, :content, :creator_id, :published_at)";
 
         $prepare_statement = $this->connection->prepare($insert_query);
@@ -19,7 +20,7 @@ class Notice {
         $prepare_statement->bindParam(':title', $title);
         $prepare_statement->bindParam(':content', $content);
         $prepare_statement->bindParam(':creator_id', $admin_id);
-        $prepare_statement->bindParam(':published_at', date('Y-m-d H:i:s'));
+        $prepare_statement->bindParam(':published_at', $date);
 
         return $prepare_statement->execute();
     }
