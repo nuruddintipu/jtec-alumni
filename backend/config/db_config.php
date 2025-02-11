@@ -1,7 +1,7 @@
 <?php
 class Database {
     private $host = "localhost";
-    private $db_name = "jtec_alumni";
+    private $db_name = "alumni_management";
     private $username = "root";
     private $password = "";
     public $connection;
