@@ -76,12 +76,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     if(!$result){
         http_response_code(400);
         $response['message'] = 'Failed to delete notice.';
-        echo json_encode($response);
     } else {
         http_response_code(200);
         $response['success'] = true;
         $response['message'] = 'Notice deleted successfully.';
-        echo json_encode($response);
     }
+    echo json_encode($response);
 
 }
