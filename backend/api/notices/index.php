@@ -20,4 +20,15 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $result = $notice->createNotice($request_data['title'], $request_data['content'], $request_data['created_by']);
 
     echo json_encode($result);
+} elseif ($_SERVER['REQUEST_METHOD'] == 'GET'){
+    $limit = isset($_GET['limit']) ? (int) $_GET['limit'] : 10;
+    $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+    $created_by = isset($_GET['created_by']) ? (int) $_GET['created_by'] : null;
+
+    if($limit <= 0) $limit = 10;
+    if($page <= 0) $page = 1;
+
+    $notice = new Notice($db_connection);
+    $notices = $notice->getAllNotices($limit, $page, $created_by);
+    echo json_encode(['success' => true, 'notices' => $notices]);
 }
