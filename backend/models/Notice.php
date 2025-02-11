@@ -38,39 +38,40 @@ class Notice {
         }
     }
 
-    public function getAllNotices($limit = 10, $page = 1, $created_by = null) {
+    public function getNotice($limit = 10, $page = 1, $created_by = null, $id = null) {
         $offset = ($page - 1) * $limit;
         $query = "SELECT * FROM notices";
+        $conditions = [];
         $params = [];
 
         if ($created_by) {
-            $query .= " WHERE created_by = :created_by";
+            $conditions[] = "created_by = :created_by";
             $params[':created_by'] = $created_by;
+        }
+        if ($id) {
+            $conditions[] = "id = :id";
+            $params[':id'] = $id;
+        }
+
+        if (!empty($conditions)) {
+            $query .= " WHERE " . implode(" AND ", $conditions);
         }
 
         $query .= " ORDER BY created_at DESC LIMIT :limit OFFSET :offset";
 
         $prepare_statement = $this->connection->prepare($query);
 
-        if ($created_by) {
-            $prepare_statement->bindParam(':created_by', $created_by, PDO::PARAM_STR);
+        foreach ($params as $key => $value) {
+            $prepare_statement->bindValue($key, $value, PDO::PARAM_STR);
         }
-        $prepare_statement->bindParam(':limit', $limit, PDO::PARAM_INT);
-        $prepare_statement->bindParam(':offset', $offset, PDO::PARAM_INT);
+        $prepare_statement->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $prepare_statement->bindValue(':offset', $offset, PDO::PARAM_INT);
 
         $prepare_statement->execute();
         return $prepare_statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
 
-    public function getNotice($notice_id) {
-        $query = "SELECT * FROM notices WHERE notice_id = :notice_id";
-        $prepare_statement = $this->connection->prepare($query);
-
-        $prepare_statement->bindParam(':notice_id', $notice_id);
-        $prepare_statement->execute();
-        return $prepare_statement->fetch(PDO::FETCH_ASSOC);
-    }
 
     public function updateNotice($notice_id, $title, $content) {
         $query = "UPDATE notices SET title = :title, content = :content WHERE notice_id = :notice_id";

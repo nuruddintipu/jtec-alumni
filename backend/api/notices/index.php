@@ -30,6 +30,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     if($page <= 0) $page = 1;
 
     $notice = new Notice($db_connection);
-    $notices = $notice->getAllNotices($limit, $page, $created_by);
+    $notices = $notice->getNotice($limit, $page, $created_by, $id);
     echo json_encode(['success' => true, 'notices' => $notices]);
 }
