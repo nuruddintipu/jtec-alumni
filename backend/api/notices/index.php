@@ -24,6 +24,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $limit = isset($_GET['limit']) ? (int) $_GET['limit'] : 10;
     $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
     $created_by = isset($_GET['created_by']) ? (int) $_GET['created_by'] : null;
+    $id = $_GET['id'] ?? null;
 
     if($limit <= 0) $limit = 10;
     if($page <= 0) $page = 1;
