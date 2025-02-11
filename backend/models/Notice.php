@@ -8,21 +8,34 @@ class Notice {
         $this->connection = $db;
     }
 
-    public function createNotice($title, $content, $admin_id) {
+    public function createNotice($title, $content, $created_by): array
+    {
         $noticeId = generateGuid();
         $date = date('Y-m-d H:i:s');
-        $insert_query = "INSERT INTO notices (id, title, content, creator_id, published_at) 
-                     VALUES (:id, :title, :content, :creator_id, :published_at)";
+        $insert_query = "INSERT INTO notices (id, title, content, created_by, created_at, updated_at) 
+                     VALUES (:id, :title, :content, :created_by, :created_at, :updated_at)";
 
         $prepare_statement = $this->connection->prepare($insert_query);
 
         $prepare_statement->bindParam(':id', $noticeId);
         $prepare_statement->bindParam(':title', $title);
         $prepare_statement->bindParam(':content', $content);
-        $prepare_statement->bindParam(':creator_id', $admin_id);
-        $prepare_statement->bindParam(':published_at', $date);
+        $prepare_statement->bindParam(':created_by', $created_by);
+        $prepare_statement->bindParam(':created_at', $date);
+        $prepare_statement->bindParam(':updated_at', $date);
 
-        return $prepare_statement->execute();
+        if($prepare_statement->execute()) {
+            return ['success' => true, 'message' => 'Notice created successfully.', 'notice_id' => $noticeId];
+        } else {
+            $error = $prepare_statement->errorInfo();
+
+            if($error[0] == '23000') {
+                http_response_code(400);
+                return ['success' => false, 'message' => 'Notice already exists.'];
+            }
+            http_response_code(500);
+            return ['success' => false, 'message' => $error];
+        }
     }
 
     public function getAllNotices(){
