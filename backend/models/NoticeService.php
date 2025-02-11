@@ -12,6 +12,9 @@ class NoticeService {
 
     public function createNotice($title, $content, $created_by): array
     {
+        $title = htmlspecialchars($title, ENT_QUOTES, 'UTF-8');
+        $content = htmlspecialchars($content, ENT_QUOTES, 'UTF-8');
+
         $noticeId = generateGuid();
         $date = date('Y-m-d H:i:s');
         $query = "INSERT INTO notices (id, title, content, created_by, created_at, updated_at) 
@@ -65,14 +68,17 @@ class NoticeService {
 
 
     public function updateNotice($id, $title=null, $content=null) {
+
         $fields = ['updated_at = :updated_at'];
         $params = [':id' => $id, ':updated_at' => date('Y-m-d H:i:s')];
 
         if($title !== null){
+            $title = htmlspecialchars($title, ENT_QUOTES, 'UTF-8');
             $fields[] = "title = :title";
             $params[':title'] = $title;
         }
         if($content !== null){
+            $content = htmlspecialchars($content, ENT_QUOTES, 'UTF-8');
             $fields[] = "content = :content";
             $params[':content'] = $content;
         }
