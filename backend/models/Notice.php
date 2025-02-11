@@ -38,12 +38,30 @@ class Notice {
         }
     }
 
-    public function getAllNotices(){
+    public function getAllNotices($limit = 10, $page = 1, $created_by = null) {
+        $offset = ($page - 1) * $limit;
         $query = "SELECT * FROM notices";
+        $params = [];
+
+        if ($created_by) {
+            $query .= " WHERE created_by = :created_by";
+            $params[':created_by'] = $created_by;
+        }
+
+        $query .= " ORDER BY created_at DESC LIMIT :limit OFFSET :offset";
+
         $prepare_statement = $this->connection->prepare($query);
+
+        if ($created_by) {
+            $prepare_statement->bindParam(':created_by', $created_by, PDO::PARAM_STR);
+        }
+        $prepare_statement->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $prepare_statement->bindParam(':offset', $offset, PDO::PARAM_INT);
+
         $prepare_statement->execute();
         return $prepare_statement->fetchAll(PDO::FETCH_ASSOC);
     }
+
 
     public function getNotice($notice_id) {
         $query = "SELECT * FROM notices WHERE notice_id = :notice_id";
