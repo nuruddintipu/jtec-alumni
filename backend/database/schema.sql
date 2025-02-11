@@ -1,4 +1,4 @@
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     id CHAR(36) PRIMARY KEY DEFAULT (UUID()),
     name VARCHAR(100) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
@@ -6,14 +6,13 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-
-CREATE TABLE notices (
-    id CHAR(36) PRIMARY KEY DEFAULT (UUID()),
-    title VARCHAR(255) NOT NULL,
-    content TEXT NOT NULL,
-    creator_id CHAR(36) NOT NULL,
-    views INT DEFAULT 0,
-    published_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (creator_id) REFERENCES users(id) ON DELETE CASCADE
+CREATE TABLE IF NOT EXISTS notices (
+    id CHAR(36) PRIMARY KEY DEFAULT (UUID()), -- GUID as ID
+    title VARCHAR(255) NOT NULL,              -- Notice title
+    content TEXT NOT NULL,                    -- Notice content
+    created_by CHAR(36) NOT NULL,             -- Admin ID (GUID)
+    views INT DEFAULT 0,                      -- View count
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
