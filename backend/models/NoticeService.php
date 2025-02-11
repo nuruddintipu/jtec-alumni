@@ -81,14 +81,9 @@ class NoticeService {
         }
 
         $query = "UPDATE notices SET " . implode(", ", $fields) . " WHERE id = :id";
-        $prepare_statement = $this->executeQuery($query, $params);
-
-        foreach ($params as $key => $value) {
-            $type = is_int($value) ? PDO::PARAM_INT : PDO::PARAM_STR;
-            $prepare_statement->bindValue($key, $value, $type);
-        }
-
-        return $prepare_statement->execute();
+        return $this->executeQuery($query, $params, function() {
+            return ['success' => true, 'message' => 'Notice updated successfully.'];
+        });
     }
 
     public function deleteNotice($id) {
