@@ -37,7 +37,7 @@ class NoticeService {
         $conditions = [];
         $params = [];
 
-        if ($created_by) {
+        if (isset($created_by)) {
             $conditions[] = "created_by = :created_by";
             $params[':created_by'] = $created_by;
         }
@@ -89,7 +89,7 @@ class NoticeService {
     public function deleteNotice($id) {
         $query = "DELETE FROM notices WHERE id = :id";
         $params = [':id' => $id];
-        return $this->executeQuery($query, $params);
+        return $this->executeDeleteQuery($query, $params);
     }
 
     private function executeQuery($query, $params, callable $onSuccess = null) {
@@ -103,6 +103,23 @@ class NoticeService {
         return $this->handleQueryError($prepare_statement);
 
     }
+
+
+    private function executeDeleteQuery($query, $params): array
+    {
+        $prepare_statement = $this->connection->prepare($query);
+        $this->bindParams($prepare_statement, $params);
+        $prepare_statement->execute();
+
+        if ($prepare_statement->rowCount() === 0) {
+            return ['success' => false, 'message' => 'Notice not found or already deleted.'];
+        }
+
+        return ['success' => true, 'message' => 'Notice deleted successfully.'];
+    }
+
+
+
     private function handleQueryError($prepare_statement): array
     {
         $error = $prepare_statement->errorInfo();
